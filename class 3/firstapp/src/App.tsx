@@ -1458,7 +1458,7 @@ function App() {
   tasks.sort();
   return (
     <div className="App">
-      <header className="App-header">
+      <header className="   -header">
         <h1>Task 1. Render Data from Array of Objects</h1>
         <table>
           <tr>
@@ -1533,7 +1533,7 @@ function App() {
         <img
           src={imgPath}
           style={{
-            width: "50%",
+            width: "56%",
           }}
           alt="black n white"
         />
