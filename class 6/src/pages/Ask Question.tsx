@@ -18,7 +18,13 @@ function AskQuestions() {
       createdAt: JSON.stringify(new Date()),
     };
 
-    sendData("questions", obj);
+    sendData("questions", obj)
+      .then((data: any) => {
+        alert(data.toString());
+      })
+      .catch((error: any) => {
+        alert(error.toString());
+      });
   };
 
   return (

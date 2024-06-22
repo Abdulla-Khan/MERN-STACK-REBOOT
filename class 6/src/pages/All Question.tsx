@@ -1,72 +1,113 @@
-// import { Link } from "react-router-dom";s
-
-import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
-import Button from "@mui/material/Button";
-
-import { useLocation, useNavigate } from "react-router-dom";
 import BAHeader from "../layout/BAHeader";
 import BAFooter from "../layout/BAFooter";
 import { useEffect, useState } from "react";
-import { Box, Paper, Typography } from "@mui/material";
-import { getData } from "../config/firebaseMethods";
+import { getData, updateData, deleteData } from "../config/firebaseMethods";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Button,
+} from "@mui/material";
 
 function AllQuestions() {
+  const [allQuestions, setAllQuestions] = useState<any>([]);
   const getQuestions = () => {
-    getData("questions");
+    getData("questions")
+      .then((data: any) => {
+        setAllQuestions([...data]);
+
+        console.log(data);
+      })
+      .catch((error: any) => {
+        {
+          console.log(error);
+        }
+      });
   };
+
   useEffect(() => {
     getQuestions();
-  });
-  const navigate = useNavigate();
-  // const state = useLocation();
-  // const textList = state.state.textList;
+  }, []);
+
+  const handleEdit = (index: number) => {
+    const question = allQuestions[index];
+    const editedQuestion = prompt("Edit question:", question.question);
+    if (editedQuestion) {
+      updateData("questions", question.id, {
+        question: editedQuestion,
+        createdAt: question.createdAt,
+        id: question.id,
+      })
+        .then((data: any) => {
+          alert(data.toString());
+          getQuestions();
+        })
+        .catch((error: any) => {
+          alert(error.toString());
+        });
+    }
+  };
+
+  const handleDelete = (index: number) => {
+    const question = allQuestions[index];
+    deleteData("questions", question.id)
+      .then((data: any) => {
+        alert(data.toString());
+        getQuestions();
+      })
+      .catch((error: any) => {
+        alert(error.toString());
+      });
+  };
+
   return (
     <>
       <BAHeader />
-      {/* <Box className="container p-3">
-        {allQuestions &&
-          Array.isArray(allQuestions) &&
-          allQuestions.length > 0 &&
-          allQuestions.map((item: any, index: number) => {
-            return (
-              <Paper
-                onClick={() => {
-                  navigate("/ask/1");
-                }}
-                className="p-2 m-1"
-              >
-                <Typography className="fs-4 fw-bold">
-                  {item.question}
-                </Typography>
-                <Box>
-                  <Box>Answers: 786</Box>
-                </Box>
-              </Paper>
-            );
-          })}
-      </Box> */}
+
+      <TableContainer component={Paper}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>S No</TableCell>
+              <TableCell>ID</TableCell>
+              <TableCell>Question</TableCell>
+              <TableCell>Actions</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {allQuestions.map((item: any, index: number) => (
+              <TableRow key={index}>
+                <TableCell>{index + 1}</TableCell>
+                <TableCell>{item.id}</TableCell>
+                <TableCell>{item.question}</TableCell>
+                <TableCell>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    style={{ marginRight: "10px" }}
+                    onClick={() => handleEdit(index)}
+                  >
+                    Edit
+                  </Button>
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    onClick={() => handleDelete(index)}
+                  >
+                    Delete
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+
       <BAFooter />
-      {/* <div>
-        <h1>All Question</h1>
-        <Button
-          variant="contained"
-          startIcon={<AssignmentTurnedInIcon />}
-          color="primary"
-          onClick={() => {
-            navigate("/ask");
-          }}
-          sx={{ margin: 1, textTransform: "capitalize" }}
-        >
-          Ask Question
-        </Button>
-        {textList.map((item: any, index: number) => {
-          return (
-            <h1 key={index}>
-              {index + 1}. {item}
-            </h1>
-          );
-        })}
-      </div> */}
     </>
   );
 }
