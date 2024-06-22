@@ -446,7 +446,7 @@ function App() {
           }}
           alt=""
         />
-        <p style={{}} className="review-banner-text">
+        <p className="review-banner-text">
           <br /> "Incredibly happy with my new sofa!
           <br /> Stylish, comfortable, and exceeded my
           <br /> expectations. Seamless purchase and
@@ -472,6 +472,62 @@ function App() {
       <p className="blogs-textline">
         Explore Our Blog for Design Inspiration and Tips
       </p>
+      <div className="container">
+        {elevationProductsList.map((product, index) => (
+          <div
+            style={{
+              display: "inline-block",
+              width: 350,
+              height: 350,
+              backgroundRepeat: "no-repeat",
+              backgroundSize: "300px 300px",
+              backgroundImage: `url(${product.image})`,
+              textAlign: "right",
+              backgroundPosition: "center center",
+              alignItems: "right",
+              justifyContent: "right",
+              paddingTop: 220,
+              paddingLeft: 80,
+              paddingRight: 20,
+            }}
+          >
+            <div className="blog-text">
+              <p
+                style={{
+                  fontSize: 14,
+                  textAlign: "left",
+                  marginBottom: 5,
+                }}
+              >
+                The Art of Cozy: Elevate Your Home with Fall Decor
+              </p>
+              <p
+                style={{
+                  fontSize: 10,
+                  textAlign: "left",
+                  marginBottom: 5,
+                }}
+              >
+                As the crisp autumn breeze sweeps in, it's time to transform
+                your living space into a cozy haven. In our latest blog post,
+                explore the art of fall decor with FurniLux. From warm color
+                palettes to snug textiles, discover simple...
+              </p>
+              <p
+                style={{
+                  color: "#4B9096",
+                  fontSize: 14,
+                  textAlign: "left",
+                  marginBottom: 5,
+                }}
+              >
+                Read More
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div className="footer"></div>
     </>
   );
 }

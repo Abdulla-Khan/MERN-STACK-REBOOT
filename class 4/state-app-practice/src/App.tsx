@@ -8,22 +8,22 @@ function App() {
   return (
     <div className="App">
       <h1>
-        Using <code> useState</code>
+        Todo Using <code> useState</code>
       </h1>
 
-      <input
-        type="text"
-        onChange={(event) => {
-          setCount(event.target.value);
-        }}
-      />
-      <button
-        onClick={() => {
-          textList.push(count);
-          setTextInput([...textList]);
-          setCount("");
-        }}
-      >
+        <input
+          type="text"
+          onChange={(event) => {
+            setCount(event.target.value);
+          }}
+        />
+        <button
+          onClick={() => {
+            textList.push(count);
+            setTextInput([...textList]);
+            setCount("");
+          }}
+        >
         Add Value{" "}
       </button>
       <button
